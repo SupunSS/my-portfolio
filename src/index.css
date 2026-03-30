@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  color: #e2e8f0;
+  overflow-x: hidden;
+}

@@ -8,7 +8,10 @@ export default function Contact() {
           Whether you need a product built, infrastructure hardened, or
           pipelines automated — I'm open to new opportunities.
         </p>
-        <a href="mailto:supunsspn@gmail.com" className="btn-primary">
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=supunsspn@gmail.com"
+          className="btn-primary"
+        >
           supunsspn@gmail.com
         </a>
         <div style={styles.social}>

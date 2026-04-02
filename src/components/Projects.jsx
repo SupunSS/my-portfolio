@@ -33,7 +33,9 @@ export default function Projects() {
   return (
     <section id="projects" style={styles.section} className="fade-in-up">
       <div className="section-inner">
-        <p className="section-label">// projects</p>
+        <p className="section-label" style={{ fontSize: "1rem" }}>
+          // projects
+        </p>
         <h2 className="section-title">Things I've built.</h2>
         <div style={styles.grid}>
           {PROJECTS.map((p) => {

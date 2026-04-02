@@ -49,7 +49,9 @@ export default function Skills() {
   return (
     <section id="skills" style={styles.section} className="fade-in-up">
       <div className="section-inner">
-        <p className="section-label">// skills & stack</p>
+        <p className="section-label" style={{ fontSize: "1rem" }}>
+          // skills & stack
+        </p>
         <h2 className="section-title">What I work with.</h2>
         <div style={styles.grid}>
           {Object.entries(SKILLS).map(([cat, items]) => (

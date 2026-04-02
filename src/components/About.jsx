@@ -4,8 +4,9 @@ export default function About() {
   return (
     <section id="about" style={styles.section} className="fade-in-up">
       <div style={styles.sectionInner}>
-        <p style={styles.label}>// about me</p>
-
+        <p className="section-label" style={{ fontSize: "1rem" }}>
+          // About Me
+        </p>
         <h2 style={styles.title}>
           Engineering <span style={{ color: "#00ff9d" }}>scalable</span>{" "}
           systems,
@@ -42,10 +43,9 @@ export default function About() {
           {/* RIGHT STATS */}
           <div style={styles.statsGrid}>
             {[
-              { val: "3+", label: "Years Experience" },
-              { val: "20+", label: "Projects Delivered" },
-              { val: "99.9%", label: "System Uptime" },
-              { val: "5k+", label: "Code Commits" },
+              { val: "1+", label: "Years professional Experience" },
+              { val: "20+", label: "Projects Developed" },
+              { val: "1k+", label: "Code Commits" },
             ].map((s) => (
               <div key={s.label} className="statCard">
                 <div style={styles.statVal}>{s.val}</div>

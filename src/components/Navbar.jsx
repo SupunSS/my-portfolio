@@ -8,16 +8,26 @@ export default function Navbar() {
   useEffect(() => {
     const handler = () => {
       const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      if (scrollY + windowHeight >= docHeight - 50) {
+        setActive(NAV_LINKS[NAV_LINKS.length - 1]);
+        return;
+      }
+
       const sections = NAV_LINKS.map((id) => {
         const el = document.getElementById(id);
         return el ? { id, top: el.offsetTop } : null;
       }).filter(Boolean);
+
       const current = sections.reduce(
         (acc, s) => (scrollY >= s.top - 120 ? s : acc),
         sections[0],
       );
       if (current) setActive(current.id);
     };
+
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);

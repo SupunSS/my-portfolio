@@ -2,7 +2,9 @@ export default function Contact() {
   return (
     <section id="contact" style={styles.section} className="fade-in-up">
       <div style={styles.inner}>
-        <p className="section-label">// contact</p>
+        <p className="section-label" style={{ fontSize: "1rem" }}>
+          // contact
+        </p>
         <h2 className="section-title">Let's build something.</h2>
         <p style={styles.text}>
           Whether you need a product built, infrastructure hardened, or

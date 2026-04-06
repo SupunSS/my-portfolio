@@ -203,7 +203,7 @@ export default function Contact() {
                 icon: <IconMail />,
                 label: "Email",
                 value: "supunsspn@gmail.com",
-                href: "mailto:supunsspn@gmail.com",
+                href: "https://mail.google.com/mail/?view=cm&fs=1&to=supunsspn@gmail.com&su=Contact from Portfolio&body=Hi Supun",
               },
               {
                 icon: <IconPhone />,

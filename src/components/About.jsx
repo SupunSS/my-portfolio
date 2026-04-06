@@ -68,31 +68,30 @@ const CARDS = [
   },
   {
     icon: <IconBriefcase />,
-    title: "Experience",
+    title: "Work Experience",
     items: [
       {
         main: "Backend Developer Intern",
         sub: "Infact Solutions · Apr–Oct 2024",
       },
       {
-        main: "NestJS & MongoDB",
-        sub: "REST APIs, unit testing, scalable backend",
+        main: "Trainee Software Engineer",
+        sub: "President office Sri Lanka . Feb 1–Present",
       },
-      { main: "IGVP — DXP", sub: "AIESEC in UWU · Feb 2024–Feb 2025" },
     ],
   },
-  {
-    icon: <IconTrophy />,
-    title: "Achievements",
-    items: [
-      {
-        main: "Dean's Certificate",
-        sub: "Exceptional academic performance Y1S1",
-      },
-      { main: "Best IG Event", sub: "AIESEC in UWU organizing committee" },
-      { main: "Former IGVP for DXP", sub: "AIESEC in Uva Wellassa University" },
-    ],
-  },
+  // {
+  //   icon: <IconTrophy />,
+  //   title: "Achievements",
+  //   items: [
+  //     {
+  //       main: "Dean's Certificate",
+  //       sub: "Exceptional academic performance Y1S1",
+  //     },
+  //     { main: "Best IG Event", sub: "AIESEC in UWU organizing committee" },
+  //     { main: "Former IGVP for DXP", sub: "AIESEC in Uva Wellassa University" },
+  //   ],
+  // },
 ];
 
 const BIO = {

@@ -31,7 +31,8 @@ const ALL_PROJECTS = [
       "React Native",
       "NestJS",
     ],
-    github: "https://github.com/SupunSS",
+    github: "https://github.com/SupunSS/rice-cooker-back-end/tree/Supun",
+    showGithub: true,
   },
   {
     title: "Bus Ticket Booking App",
@@ -40,7 +41,8 @@ const ALL_PROJECTS = [
     status: "completed",
     desc: "Cross-platform mobile application for bus ticket booking with Flutter frontend and Express backend.",
     stack: ["Dart", "Flutter", "Express", "JavaScript", "HTML"],
-    github: "https://github.com/SupunSS",
+    github: "https://github.com/SupunSS/bustbooking",
+    showGithub: true,
   },
   {
     title: "Royal State",
@@ -50,6 +52,7 @@ const ALL_PROJECTS = [
     desc: "Property-selling website with modern UI and backend functionality for real estate listings.",
     stack: ["HTML", "CSS", "JavaScript", "PHP", "Spring Boot", "Java"],
     github: "https://github.com/SupunSS",
+    showGithub: false,
   },
   {
     title: "DevOps CI/CD Pipeline",
@@ -59,6 +62,7 @@ const ALL_PROJECTS = [
     desc: "Automated deployment pipeline with GitHub Actions, Docker containerization, and continuous integration workflows.",
     stack: ["Docker", "GitHub Actions", "Bash", "YAML"],
     github: "https://github.com/SupunSS",
+    showGithub: false,
   },
   {
     title: "Microservices Architecture",
@@ -68,6 +72,7 @@ const ALL_PROJECTS = [
     desc: "Scalable microservices setup with containerized services, API gateway, and service mesh implementation.",
     stack: ["Docker", "Node.js", "NestJS", "MongoDB", "Redis"],
     github: "https://github.com/SupunSS",
+    showGithub: false,
   },
   {
     title: "Augusta Primary School",
@@ -77,6 +82,7 @@ const ALL_PROJECTS = [
     desc: "Educational institution website with dynamic content management and responsive design.",
     stack: ["HTML", "CSS", "JavaScript", "PHP"],
     github: "https://github.com/SupunSS",
+    showGithub: false,
   },
   {
     title: "Nexus Coffee Shop",
@@ -86,6 +92,7 @@ const ALL_PROJECTS = [
     desc: "Modern coffee shop website frontend with elegant design and smooth user experience.",
     stack: ["HTML", "CSS"],
     github: "https://github.com/SupunSS",
+    showGithub: false,
   },
   {
     title: "Cloud Infrastructure Automation",
@@ -95,6 +102,7 @@ const ALL_PROJECTS = [
     desc: "Infrastructure as Code setup for AWS with automated provisioning, monitoring, and scaling capabilities.",
     stack: ["AWS", "Terraform", "CloudWatch", "Lambda"],
     github: "https://github.com/SupunSS",
+    showGithub: false,
   },
 ];
 
@@ -178,16 +186,18 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
-                <div style={styles.cardFooter}>
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={styles.githubBtn}
-                  >
-                    <IconGithub /> View on GitHub
-                  </a>
-                </div>
+                {p.showGithub && (
+                  <div style={styles.cardFooter}>
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={styles.githubBtn}
+                    >
+                      <IconGithub /> View on GitHub
+                    </a>
+                  </div>
+                )}
               </div>
             );
           })}

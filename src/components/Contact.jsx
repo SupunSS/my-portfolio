@@ -1,4 +1,10 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
+
+const EMAILJS_SERVICE_ID = "service_v43si6c";
+const EMAILJS_TEMPLATE_ID = "template_nqq70e6";
+const EMAILJS_AUTOREPLY_ID = "template_8o3v8bs";
+const EMAILJS_PUBLIC_KEY = "61aeDFuXiceiUAJDd";
 
 const IconMail = () => (
   <svg
@@ -112,6 +118,22 @@ const IconCheck = () => (
   </svg>
 );
 
+const IconLoader = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ animation: "spin 1s linear infinite" }}
+  >
+    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+  </svg>
+);
+
 export default function Contact() {
   const [form, setForm] = useState({
     name: "",
@@ -119,21 +141,51 @@ export default function Contact() {
     subject: "",
     message: "",
   });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form.name || !form.email || !form.message) return;
-    const mailto = `mailto:supunsspn@gmail.com?subject=${encodeURIComponent(
-      form.subject || "Portfolio Contact",
-    )}&body=${encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
-    )}`;
-    window.open(mailto);
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
+
+    setStatus("sending");
+
+    const params = {
+      from_name: form.name,
+      from_email: form.email,
+      email: form.email, // for {{email}} in auto-reply To field
+      to_name: form.name, // for {{to_name}} in auto-reply body
+      subject: form.subject || "Portfolio Contact",
+      message: form.message,
+    };
+
+    try {
+      // Send main email to you
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        params,
+        EMAILJS_PUBLIC_KEY,
+      );
+
+      // Send auto-reply to the person who contacted you
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_AUTOREPLY_ID,
+        params,
+        EMAILJS_PUBLIC_KEY,
+      );
+
+      setStatus("success");
+      setForm({ name: "", email: "", subject: "", message: "" });
+      setTimeout(() => setStatus("idle"), 4000);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      console.error("Error details:", err.text);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
   };
 
   return (
@@ -156,7 +208,7 @@ export default function Contact() {
                 icon: <IconMail />,
                 label: "Email",
                 value: "supunsspn@gmail.com",
-                href: "https://mail.google.com/mail/?view=cm&fs=1&to=supunsspn@gmail.com",
+                href: "mailto:supunsspn@gmail.com",
               },
               {
                 icon: <IconPhone />,
@@ -241,10 +293,47 @@ export default function Contact() {
               />
             </div>
 
-            <button onClick={handleSubmit} style={styles.submitBtn}>
-              {sent ? (
+            {/* Status message */}
+            {status === "success" && (
+              <div
+                style={{
+                  ...styles.alert,
+                  background: "rgba(0,255,157,0.08)",
+                  border: "1px solid rgba(0,255,157,0.25)",
+                  color: "#00ff9d",
+                }}
+              >
+                ✓ Message sent! I'll get back to you soon.
+              </div>
+            )}
+            {status === "error" && (
+              <div
+                style={{
+                  ...styles.alert,
+                  background: "rgba(255,107,107,0.08)",
+                  border: "1px solid rgba(255,107,107,0.25)",
+                  color: "#ff6b6b",
+                }}
+              >
+                ✕ Something went wrong. Please try again or email me directly.
+              </div>
+            )}
+
+            <button
+              onClick={handleSubmit}
+              disabled={status === "sending"}
+              style={{
+                ...styles.submitBtn,
+                opacity: status === "sending" ? 0.7 : 1,
+              }}
+            >
+              {status === "sending" ? (
                 <>
-                  <IconCheck /> Opened in mail client
+                  <IconLoader /> Sending...
+                </>
+              ) : status === "success" ? (
+                <>
+                  <IconCheck /> Message Sent!
                 </>
               ) : (
                 <>
@@ -352,6 +441,12 @@ const styles = {
     outline: "none",
     width: "100%",
     boxSizing: "border-box",
+  },
+  alert: {
+    padding: "0.75rem 1rem",
+    borderRadius: 6,
+    fontSize: "0.8rem",
+    letterSpacing: "0.02em",
   },
   submitBtn: {
     background: "#00ff9d",

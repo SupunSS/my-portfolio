@@ -1,3 +1,5 @@
+import { getRole } from "../utils/getRole";
+
 const IconGithub = () => (
   <svg
     width="14"
@@ -14,27 +16,11 @@ const IconGithub = () => (
   </svg>
 );
 
-const IconExternalLink = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-    <polyline points="15 3 21 3 21 9" />
-    <line x1="10" x2="21" y1="14" y2="3" />
-  </svg>
-);
-
-const PROJECTS = [
+const ALL_PROJECTS = [
   {
     title: "Automatic Rice Cooker using IOT",
     tag: "IoT & Mobile",
+    roles: ["dev", "default"],
     status: "completed",
     desc: "Final year project featuring IoT-enabled rice cooker with mobile control via React Native app, backend powered by NestJS.",
     stack: [
@@ -50,6 +36,7 @@ const PROJECTS = [
   {
     title: "Bus Ticket Booking App",
     tag: "Mobile Development",
+    roles: ["dev", "default"],
     status: "completed",
     desc: "Cross-platform mobile application for bus ticket booking with Flutter frontend and Express backend.",
     stack: ["Dart", "Flutter", "Express", "JavaScript", "HTML"],
@@ -58,6 +45,7 @@ const PROJECTS = [
   {
     title: "Royal State",
     tag: "Web Development",
+    roles: ["dev", "default"],
     status: "completed",
     desc: "Property-selling website with modern UI and backend functionality for real estate listings.",
     stack: ["HTML", "CSS", "JavaScript", "PHP", "Spring Boot", "Java"],
@@ -66,6 +54,7 @@ const PROJECTS = [
   {
     title: "DevOps CI/CD Pipeline",
     tag: "DevOps",
+    roles: ["devops", "default"],
     status: "completed",
     desc: "Automated deployment pipeline with GitHub Actions, Docker containerization, and continuous integration workflows.",
     stack: ["Docker", "GitHub Actions", "Bash", "YAML"],
@@ -74,6 +63,7 @@ const PROJECTS = [
   {
     title: "Microservices Architecture",
     tag: "DevOps",
+    roles: ["devops", "default"],
     status: "building",
     desc: "Scalable microservices setup with containerized services, API gateway, and service mesh implementation.",
     stack: ["Docker", "Node.js", "NestJS", "MongoDB", "Redis"],
@@ -82,6 +72,7 @@ const PROJECTS = [
   {
     title: "Augusta Primary School",
     tag: "Web Development",
+    roles: ["dev", "default"],
     status: "completed",
     desc: "Educational institution website with dynamic content management and responsive design.",
     stack: ["HTML", "CSS", "JavaScript", "PHP"],
@@ -90,6 +81,7 @@ const PROJECTS = [
   {
     title: "Nexus Coffee Shop",
     tag: "Frontend",
+    roles: ["dev", "default"],
     status: "completed",
     desc: "Modern coffee shop website frontend with elegant design and smooth user experience.",
     stack: ["HTML", "CSS"],
@@ -98,6 +90,7 @@ const PROJECTS = [
   {
     title: "Cloud Infrastructure Automation",
     tag: "DevOps",
+    roles: ["devops", "default"],
     status: "building",
     desc: "Infrastructure as Code setup for AWS with automated provisioning, monitoring, and scaling capabilities.",
     stack: ["AWS", "Terraform", "CloudWatch", "Lambda"],
@@ -105,7 +98,38 @@ const PROJECTS = [
   },
 ];
 
+const TAG_COLORS = {
+  "IoT & Mobile": {
+    bg: "rgba(0,255,157,0.1)",
+    color: "#00ff9d",
+    border: "rgba(0,255,157,0.25)",
+  },
+  "Mobile Development": {
+    bg: "rgba(77,158,255,0.1)",
+    color: "#4d9eff",
+    border: "rgba(77,158,255,0.25)",
+  },
+  "Web Development": {
+    bg: "rgba(255,189,46,0.1)",
+    color: "#ffbd2e",
+    border: "rgba(255,189,46,0.25)",
+  },
+  Frontend: {
+    bg: "rgba(139,92,246,0.1)",
+    color: "#8b5cf6",
+    border: "rgba(139,92,246,0.25)",
+  },
+  DevOps: {
+    bg: "rgba(255,107,107,0.1)",
+    color: "#ff6b6b",
+    border: "rgba(255,107,107,0.25)",
+  },
+};
+
 export default function Projects() {
+  const role = getRole() || "default";
+  const projects = ALL_PROJECTS.filter((p) => p.roles.includes(role));
+
   return (
     <section id="projects" style={styles.section} className="fade-in-up">
       <div className="section-inner">
@@ -114,36 +138,8 @@ export default function Projects() {
         </p>
         <h2 className="section-title">Things I've built.</h2>
         <div style={styles.grid}>
-          {PROJECTS.map((p) => {
-            const tagColors = {
-              "IoT & Mobile": {
-                bg: "rgba(0,255,157,0.1)",
-                color: "#00ff9d",
-                border: "rgba(0,255,157,0.25)",
-              },
-              "Mobile Development": {
-                bg: "rgba(77,158,255,0.1)",
-                color: "#4d9eff",
-                border: "rgba(77,158,255,0.25)",
-              },
-              "Web Development": {
-                bg: "rgba(255,189,46,0.1)",
-                color: "#ffbd2e",
-                border: "rgba(255,189,46,0.25)",
-              },
-              Frontend: {
-                bg: "rgba(139,92,246,0.1)",
-                color: "#8b5cf6",
-                border: "rgba(139,92,246,0.25)",
-              },
-              DevOps: {
-                bg: "rgba(255,107,107,0.1)",
-                color: "#ff6b6b",
-                border: "rgba(255,107,107,0.25)",
-              },
-            };
-            const colors = tagColors[p.tag] || tagColors["Web Development"];
-
+          {projects.map((p) => {
+            const colors = TAG_COLORS[p.tag] || TAG_COLORS["Web Development"];
             return (
               <div key={p.title} style={styles.card}>
                 <div style={styles.cardTop}>
@@ -189,8 +185,7 @@ export default function Projects() {
                     rel="noopener noreferrer"
                     style={styles.githubBtn}
                   >
-                    <IconGithub />
-                    View on GitHub
+                    <IconGithub /> View on GitHub
                   </a>
                 </div>
               </div>
@@ -288,7 +283,5 @@ const styles = {
     fontSize: "0.75rem",
     fontWeight: 600,
     letterSpacing: "0.03em",
-    transition: "all 0.2s",
-    cursor: "pointer",
   },
 };

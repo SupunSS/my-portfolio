@@ -1,4 +1,5 @@
 import React from "react";
+import { getRole } from "../utils/getRole";
 
 const IconGradCap = () => (
   <svg
@@ -80,34 +81,123 @@ const CARDS = [
       { main: "IGVP — DXP", sub: "AIESEC in UWU · Feb 2024–Feb 2025" },
     ],
   },
-  // {
-  //   icon: <IconTrophy />,
-  //   title: "Achievements",
-  //   items: [
-  //     {
-  //       main: "Dean's Certificate",
-  //       sub: "Exceptional academic performance Y1S1",
-  //     },
-  //     { main: "Best IG Event", sub: "AIESEC in UWU organizing committee" },
-  //     { main: "Former IGVP for DXP", sub: "AIESEC in Uva Wellassa University" },
-  //   ],
-  // },
+  {
+    icon: <IconTrophy />,
+    title: "Achievements",
+    items: [
+      {
+        main: "Dean's Certificate",
+        sub: "Exceptional academic performance Y1S1",
+      },
+      { main: "Best IG Event", sub: "AIESEC in UWU organizing committee" },
+      { main: "Former IGVP for DXP", sub: "AIESEC in Uva Wellassa University" },
+    ],
+  },
 ];
 
+const BIO = {
+  default: {
+    title: (
+      <>
+        Building <span style={{ color: "#00ff9d" }}>reliable</span> backend
+        <br />
+        systems that scale.
+      </>
+    ),
+    p1: (
+      <>
+        I am an accomplished backend developer with expertise in{" "}
+        <span style={{ color: "#00ff9d" }}>Node.js</span> and{" "}
+        <span style={{ color: "#00ff9d" }}>RESTful API</span> development. I
+        demonstrate strong analytical thinking and proficiency in backend
+        testing techniques, WordPress, and JavaScript.
+      </>
+    ),
+    p2: (
+      <>
+        Familiar with{" "}
+        <span style={{ color: "#00ff9d" }}>microservices architecture</span> and
+        adept at API integration. During my internship at Infact Solutions, I
+        developed backend applications with NestJS and MongoDB, maintained APIs,
+        and contributed to building{" "}
+        <span style={{ color: "#00ff9d" }}>scalable</span> and{" "}
+        <span style={{ color: "#00ff9d" }}>efficient</span> server-side
+        applications.
+      </>
+    ),
+  },
+  devops: {
+    title: (
+      <>
+        Building <span style={{ color: "#00ff9d" }}>automated</span>{" "}
+        infrastructure
+        <br />
+        that never sleeps.
+      </>
+    ),
+    p1: (
+      <>
+        I am a DevOps engineer focused on{" "}
+        <span style={{ color: "#00ff9d" }}>CI/CD pipelines</span>,{" "}
+        <span style={{ color: "#00ff9d" }}>container orchestration</span>, and
+        cloud infrastructure automation. I bridge the gap between development
+        and operations to ensure reliable, fast software delivery.
+      </>
+    ),
+    p2: (
+      <>
+        With hands-on experience in Docker, GitHub Actions, and cloud platforms,
+        I build infrastructure that is{" "}
+        <span style={{ color: "#00ff9d" }}>automated</span>,{" "}
+        <span style={{ color: "#00ff9d" }}>observable</span>, and{" "}
+        <span style={{ color: "#00ff9d" }}>resilient</span> — so teams can ship
+        code with confidence.
+      </>
+    ),
+  },
+  dev: {
+    title: (
+      <>
+        Building <span style={{ color: "#00ff9d" }}>scalable</span> fullstack
+        <br />
+        applications end-to-end.
+      </>
+    ),
+    p1: (
+      <>
+        I am a fullstack developer with expertise in{" "}
+        <span style={{ color: "#00ff9d" }}>React</span>,{" "}
+        <span style={{ color: "#00ff9d" }}>Node.js</span>, and{" "}
+        <span style={{ color: "#00ff9d" }}>NestJS</span>. I build complete web
+        applications from UI to database, with a strong focus on clean
+        architecture and performance.
+      </>
+    ),
+    p2: (
+      <>
+        During my internship at Infact Solutions, I built scalable backend
+        services with NestJS and MongoDB, and I have shipped multiple fullstack
+        projects across web and mobile. I care deeply about writing{" "}
+        <span style={{ color: "#00ff9d" }}>maintainable</span>,{" "}
+        <span style={{ color: "#00ff9d" }}>testable</span>, and{" "}
+        <span style={{ color: "#00ff9d" }}>well-documented</span> code.
+      </>
+    ),
+  },
+};
+
 export default function About() {
+  const role = getRole();
+  const bio = BIO[role] || BIO.default;
+
   return (
     <section id="about" style={styles.section} className="fade-in-up">
       <div style={styles.sectionInner}>
         <p className="section-label" style={{ fontSize: "1rem" }}>
           // About Me
         </p>
-        <h2 style={styles.title}>
-          Building <span style={{ color: "#00ff9d" }}>reliable</span> backend
-          <br />
-          systems that scale.
-        </h2>
+        <h2 style={styles.title}>{bio.title}</h2>
 
-        {/* Info Cards */}
         <div style={styles.cardRow}>
           {CARDS.map((card) => (
             <div key={card.title} style={styles.infoCard}>
@@ -125,38 +215,17 @@ export default function About() {
           ))}
         </div>
 
-        {/* Bio + Stats */}
         <div style={styles.grid}>
           <div>
-            <p style={styles.text}>
-              I am an accomplished backend developer who recently finished
-              university studies with expertise in{" "}
-              <span style={{ color: "#00ff9d" }}>Node.js</span> and{" "}
-              <span style={{ color: "#00ff9d" }}>RESTful API</span> development.
-              I demonstrate strong analytical thinking and proficiency in
-              backend testing techniques, WordPress, and JavaScript.
-            </p>
-            <p style={styles.text}>
-              Familiar with{" "}
-              <span style={{ color: "#00ff9d" }}>
-                microservices architecture
-              </span>{" "}
-              and adept at API integration. During my internship at Infact
-              Solutions, I developed backend applications with NestJS and
-              MongoDB, maintained APIs ensuring smooth interaction between
-              front-end and back-end systems, and contributed to building{" "}
-              <span style={{ color: "#00ff9d" }}>scalable</span> and{" "}
-              <span style={{ color: "#00ff9d" }}>efficient</span> server-side
-              applications.
-            </p>
+            <p style={styles.text}>{bio.p1}</p>
+            <p style={styles.text}>{bio.p2}</p>
           </div>
-
           <div style={styles.statsGrid}>
             {[
               { val: "1Y", label: "Work experience" },
               { val: "20+", label: "Projects completed" },
               { val: "3.00+", label: "University GPA" },
-              { val: "1k+", label: "Code Commits" },
+              { val: "1k+", label: "Code commits" },
             ].map((s) => (
               <div key={s.label} style={styles.statCard}>
                 <div style={styles.statVal}>{s.val}</div>
@@ -180,8 +249,6 @@ const styles = {
     marginBottom: "2.5rem",
     lineHeight: 1.3,
   },
-
-  // Cards
   cardRow: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
@@ -229,8 +296,6 @@ const styles = {
     margin: 0,
     lineHeight: 1.5,
   },
-
-  // Bio + stats
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",

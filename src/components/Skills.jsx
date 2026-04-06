@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import { getRole } from "../utils/getRole";
 
-const SKILLS = {
+const ALL_SKILLS = {
   Backend: [
     { name: "Node.js", level: 90 },
     { name: "NestJS", level: 85 },
@@ -29,6 +30,26 @@ const SKILLS = {
     { name: "Analytical Thinking", level: 88 },
     { name: "Python / C / C++ / C#", level: 70 },
   ],
+};
+
+const ROLE_SKILLS = {
+  devops: {
+    DevOps: ALL_SKILLS.DevOps,
+    Backend: ALL_SKILLS.Backend,
+    "Other Skills": ALL_SKILLS["Other Skills"],
+  },
+  dev: {
+    Backend: ALL_SKILLS.Backend,
+    Frontend: ALL_SKILLS.Frontend,
+    "Other Skills": ALL_SKILLS["Other Skills"],
+  },
+};
+
+const CAT_COLORS = {
+  Backend: "#00ff9d",
+  Frontend: "#4d9eff",
+  DevOps: "#ff6b6b",
+  "Other Skills": "#ffbd2e",
 };
 
 function SkillBar({ name, level }) {
@@ -60,6 +81,9 @@ function SkillBar({ name, level }) {
 }
 
 export default function Skills() {
+  const role = getRole();
+  const skills = ROLE_SKILLS[role] || ALL_SKILLS;
+
   return (
     <section id="skills" style={styles.section} className="fade-in-up">
       <div className="section-inner">
@@ -68,30 +92,22 @@ export default function Skills() {
         </p>
         <h2 className="section-title">What I work with.</h2>
         <div style={styles.grid}>
-          {Object.entries(SKILLS).map(([cat, items]) => {
-            const colors = {
-              Backend: "#00ff9d",
-              Frontend: "#4d9eff",
-              DevOps: "#ff6b6b",
-              "Other Skills": "#ffbd2e",
-            };
-            return (
-              <div key={cat}>
-                <div style={styles.catHeader}>
-                  <span
-                    style={{
-                      ...styles.catDot,
-                      background: colors[cat] || "#94a3b8",
-                    }}
-                  />
-                  <span style={styles.catName}>{cat}</span>
-                </div>
-                {items.map((s) => (
-                  <SkillBar key={s.name} {...s} />
-                ))}
+          {Object.entries(skills).map(([cat, items]) => (
+            <div key={cat}>
+              <div style={styles.catHeader}>
+                <span
+                  style={{
+                    ...styles.catDot,
+                    background: CAT_COLORS[cat] || "#94a3b8",
+                  }}
+                />
+                <span style={styles.catName}>{cat}</span>
               </div>
-            );
-          })}
+              {items.map((s) => (
+                <SkillBar key={s.name} {...s} />
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>

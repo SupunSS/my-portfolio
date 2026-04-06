@@ -1,53 +1,127 @@
 import { useState, useEffect } from "react";
+import { getRole } from "../utils/getRole";
 
-const TERMINAL_LINES = [
-  { delay: 0, text: "$ whoami", type: "cmd" },
-  { delay: 400, text: "→ backend developer & software engineer", type: "out" },
-  { delay: 900, text: "$ cat skills.txt", type: "cmd" },
-  {
-    delay: 1300,
-    text: "→ node.js · nestjs · mongodb · react · typescript",
-    type: "out",
+const LINES = {
+  default: [
+    { delay: 0, text: "$ whoami", type: "cmd" },
+    {
+      delay: 400,
+      text: "→ backend developer & software engineer",
+      type: "out",
+    },
+    { delay: 900, text: "$ cat skills.txt", type: "cmd" },
+    {
+      delay: 1300,
+      text: "→ node.js · nestjs · mongodb · react · typescript",
+      type: "out",
+    },
+    { delay: 1900, text: "$ systemctl status portfolio", type: "cmd" },
+    {
+      delay: 2300,
+      text: "● portfolio.service — Active (running)",
+      type: "success",
+    },
+  ],
+  devops: [
+    { delay: 0, text: "$ whoami", type: "cmd" },
+    {
+      delay: 400,
+      text: "→ devops engineer & cloud infrastructure specialist",
+      type: "out",
+    },
+    { delay: 900, text: "$ cat stack.txt", type: "cmd" },
+    {
+      delay: 1300,
+      text: "→ docker · kubernetes · terraform · aws · ci/cd",
+      type: "out",
+    },
+    { delay: 1900, text: "$ systemctl status infrastructure", type: "cmd" },
+    {
+      delay: 2300,
+      text: "● infrastructure.service — Active (running)",
+      type: "success",
+    },
+  ],
+  dev: [
+    { delay: 0, text: "$ whoami", type: "cmd" },
+    {
+      delay: 400,
+      text: "→ fullstack developer & backend engineer",
+      type: "out",
+    },
+    { delay: 900, text: "$ cat stack.txt", type: "cmd" },
+    {
+      delay: 1300,
+      text: "→ node.js · nestjs · react · mongodb · typescript",
+      type: "out",
+    },
+    { delay: 1900, text: "$ systemctl status portfolio", type: "cmd" },
+    {
+      delay: 2300,
+      text: "● portfolio.service — Active (running)",
+      type: "success",
+    },
+  ],
+};
+
+const CONTENT = {
+  default: {
+    title: "Building scalable",
+    accent: "backend systems.",
+    sub: "Accomplished backend developer specializing in Node.js, NestJS, and RESTful API development. Focused on building efficient, scalable server-side applications.",
   },
-  { delay: 1900, text: "$ systemctl status portfolio", type: "cmd" },
-  {
-    delay: 2300,
-    text: "● portfolio.service — Active (running)",
-    type: "success",
+  devops: {
+    title: "Automating infrastructure,",
+    accent: "scaling the cloud.",
+    sub: "DevOps engineer specializing in CI/CD pipelines, container orchestration, and cloud infrastructure. Focused on building reliable, automated deployment systems.",
   },
-];
+  dev: {
+    title: "Building scalable",
+    accent: "fullstack applications.",
+    sub: "Fullstack developer specializing in Node.js, NestJS, React, and RESTful APIs. Focused on building efficient, production-ready web applications.",
+  },
+};
 
 export default function Hero() {
+  const role = getRole();
+  const lines = LINES[role] || LINES.default;
+  const content = CONTENT[role] || CONTENT.default;
+
   const [visible, setVisible] = useState([]);
   const [cursor, setCursor] = useState(true);
 
   useEffect(() => {
-    TERMINAL_LINES.forEach((line, i) => {
-      setTimeout(() => setVisible((v) => [...v, i]), line.delay);
+    let timeouts = [];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setVisible([]);
+    lines.forEach((line, i) => {
+      const timeout = setTimeout(() => {
+        setVisible((v) => [...v, i]);
+      }, line.delay);
+      timeouts.push(timeout);
     });
     const interval = setInterval(() => setCursor((c) => !c), 530);
-    return () => clearInterval(interval);
-  }, []);
+    return () => {
+      timeouts.forEach(clearTimeout);
+      clearInterval(interval);
+      setVisible([]);
+    };
+  }, [lines, role]);
 
   return (
     <section id="home" style={styles.hero} className="fade-in-up">
       <div style={styles.grid}>
-        {/* Left */}
         <div style={styles.left}>
           <div style={styles.badge}>
             <span style={styles.dot} />
             Available for hire
           </div>
           <h1 style={styles.title}>
-            Building scalable
+            {content.title}
             <br />
-            <span style={styles.accent}>backend systems.</span>
+            <span style={styles.accent}>{content.accent}</span>
           </h1>
-          <p style={styles.sub}>
-            Accomplished backend developer specializing in Node.js, NestJS, and
-            RESTful API development. Focused on building efficient, scalable
-            server-side applications.
-          </p>
+          <p style={styles.sub}>{content.sub}</p>
           <div style={styles.btns}>
             <a href="#projects" className="btn-primary">
               View Projects
@@ -58,7 +132,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Terminal */}
         <div style={styles.terminal}>
           <div style={styles.termBar}>
             <span style={{ ...styles.termDot, background: "#ff5f56" }} />
@@ -67,7 +140,7 @@ export default function Hero() {
             <span style={styles.termTitle}>portfolio ~ bash</span>
           </div>
           <div style={styles.termBody}>
-            {TERMINAL_LINES.map((line, i) =>
+            {lines.map((line, i) =>
               visible.includes(i) ? (
                 <div
                   key={i}
@@ -85,7 +158,7 @@ export default function Hero() {
                 </div>
               ) : null,
             )}
-            {visible.length >= TERMINAL_LINES.length && (
+            {visible.length >= lines.length && (
               <div style={styles.termLine}>
                 <span style={{ color: "#00ff9d", marginRight: 8 }}>$</span>
                 <span

@@ -1,31 +1,107 @@
+const IconGithub = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+);
+
+const IconExternalLink = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+    <polyline points="15 3 21 3 21 9" />
+    <line x1="10" x2="21" y1="14" y2="3" />
+  </svg>
+);
+
 const PROJECTS = [
   {
-    title: "K8s Auto-Scaler",
+    title: "Automatic Rice Cooker using IOT",
+    tag: "IoT & Mobile",
+    status: "completed",
+    desc: "Final year project featuring IoT-enabled rice cooker with mobile control via React Native app, backend powered by NestJS.",
+    stack: [
+      "TypeScript",
+      "JavaScript",
+      "Python",
+      "C",
+      "React Native",
+      "NestJS",
+    ],
+    github: "https://github.com/SupunSS",
+  },
+  {
+    title: "Bus Ticket Booking App",
+    tag: "Mobile Development",
+    status: "completed",
+    desc: "Cross-platform mobile application for bus ticket booking with Flutter frontend and Express backend.",
+    stack: ["Dart", "Flutter", "Express", "JavaScript", "HTML"],
+    github: "https://github.com/SupunSS",
+  },
+  {
+    title: "Royal State",
+    tag: "Web Development",
+    status: "completed",
+    desc: "Property-selling website with modern UI and backend functionality for real estate listings.",
+    stack: ["HTML", "CSS", "JavaScript", "PHP", "Spring Boot", "Java"],
+    github: "https://github.com/SupunSS",
+  },
+  {
+    title: "DevOps CI/CD Pipeline",
     tag: "DevOps",
-    status: "live",
-    desc: "Kubernetes operator that dynamically scales microservices based on custom Prometheus metrics with predictive HPA.",
-    stack: ["Go", "Kubernetes", "Prometheus", "Helm"],
+    status: "completed",
+    desc: "Automated deployment pipeline with GitHub Actions, Docker containerization, and continuous integration workflows.",
+    stack: ["Docker", "GitHub Actions", "Bash", "YAML"],
+    github: "https://github.com/SupunSS",
   },
   {
-    title: "GitOps Pipeline",
+    title: "Microservices Architecture",
     tag: "DevOps",
-    status: "live",
-    desc: "End-to-end GitOps workflow using ArgoCD, GitHub Actions, and automated canary deployments with rollback logic.",
-    stack: ["ArgoCD", "GitHub Actions", "Helm", "Terraform"],
-  },
-  {
-    title: "Cloud Dashboard",
-    tag: "Development",
-    status: "live",
-    desc: "Real-time infrastructure monitoring dashboard with cost analytics, alerting, and multi-cloud resource management.",
-    stack: ["React", "Node.js", "AWS SDK", "WebSockets"],
-  },
-  {
-    title: "Auth Microservice",
-    tag: "Development",
     status: "building",
-    desc: "Zero-trust authentication service with OAuth2, JWT rotation, and rate-limited API gateway backed by Redis.",
-    stack: ["Python", "FastAPI", "Redis", "PostgreSQL"],
+    desc: "Scalable microservices setup with containerized services, API gateway, and service mesh implementation.",
+    stack: ["Docker", "Node.js", "NestJS", "MongoDB", "Redis"],
+    github: "https://github.com/SupunSS",
+  },
+  {
+    title: "Augusta Primary School",
+    tag: "Web Development",
+    status: "completed",
+    desc: "Educational institution website with dynamic content management and responsive design.",
+    stack: ["HTML", "CSS", "JavaScript", "PHP"],
+    github: "https://github.com/SupunSS",
+  },
+  {
+    title: "Nexus Coffee Shop",
+    tag: "Frontend",
+    status: "completed",
+    desc: "Modern coffee shop website frontend with elegant design and smooth user experience.",
+    stack: ["HTML", "CSS"],
+    github: "https://github.com/SupunSS",
+  },
+  {
+    title: "Cloud Infrastructure Automation",
+    tag: "DevOps",
+    status: "building",
+    desc: "Infrastructure as Code setup for AWS with automated provisioning, monitoring, and scaling capabilities.",
+    stack: ["AWS", "Terraform", "CloudWatch", "Lambda"],
+    github: "https://github.com/SupunSS",
   },
 ];
 
@@ -39,18 +115,44 @@ export default function Projects() {
         <h2 className="section-title">Things I've built.</h2>
         <div style={styles.grid}>
           {PROJECTS.map((p) => {
-            const isDevOps = p.tag === "DevOps";
+            const tagColors = {
+              "IoT & Mobile": {
+                bg: "rgba(0,255,157,0.1)",
+                color: "#00ff9d",
+                border: "rgba(0,255,157,0.25)",
+              },
+              "Mobile Development": {
+                bg: "rgba(77,158,255,0.1)",
+                color: "#4d9eff",
+                border: "rgba(77,158,255,0.25)",
+              },
+              "Web Development": {
+                bg: "rgba(255,189,46,0.1)",
+                color: "#ffbd2e",
+                border: "rgba(255,189,46,0.25)",
+              },
+              Frontend: {
+                bg: "rgba(139,92,246,0.1)",
+                color: "#8b5cf6",
+                border: "rgba(139,92,246,0.25)",
+              },
+              DevOps: {
+                bg: "rgba(255,107,107,0.1)",
+                color: "#ff6b6b",
+                border: "rgba(255,107,107,0.25)",
+              },
+            };
+            const colors = tagColors[p.tag] || tagColors["Web Development"];
+
             return (
               <div key={p.title} style={styles.card}>
                 <div style={styles.cardTop}>
                   <span
                     style={{
                       ...styles.tag,
-                      background: isDevOps
-                        ? "rgba(0,255,157,0.1)"
-                        : "rgba(77,158,255,0.1)",
-                      color: isDevOps ? "#00ff9d" : "#4d9eff",
-                      border: `1px solid ${isDevOps ? "rgba(0,255,157,0.25)" : "rgba(77,158,255,0.25)"}`,
+                      background: colors.bg,
+                      color: colors.color,
+                      border: `1px solid ${colors.border}`,
                     }}
                   >
                     {p.tag}
@@ -58,13 +160,14 @@ export default function Projects() {
                   <span
                     style={{
                       ...styles.status,
-                      color: p.status === "live" ? "#00ff9d" : "#ffbd2e",
+                      color: p.status === "completed" ? "#00ff9d" : "#ffbd2e",
                     }}
                   >
                     <span
                       style={{
                         ...styles.statusDot,
-                        background: p.status === "live" ? "#00ff9d" : "#ffbd2e",
+                        background:
+                          p.status === "completed" ? "#00ff9d" : "#ffbd2e",
                       }}
                     />
                     {p.status}
@@ -79,6 +182,17 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
+                <div style={styles.cardFooter}>
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={styles.githubBtn}
+                  >
+                    <IconGithub />
+                    View on GitHub
+                  </a>
+                </div>
               </div>
             );
           })}
@@ -92,7 +206,7 @@ const styles = {
   section: { padding: "6rem 2.5rem", position: "relative", zIndex: 1 },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
     gap: "1.25rem",
   },
   card: {
@@ -100,6 +214,8 @@ const styles = {
     border: "1px solid rgba(255,255,255,0.06)",
     borderRadius: 8,
     padding: "1.5rem",
+    display: "flex",
+    flexDirection: "column",
   },
   cardTop: {
     display: "flex",
@@ -138,8 +254,14 @@ const styles = {
     color: "#64748b",
     lineHeight: 1.7,
     margin: "0 0 1.25rem",
+    flex: 1,
   },
-  stackRow: { display: "flex", flexWrap: "wrap", gap: 6 },
+  stackRow: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 6,
+    marginBottom: "1.25rem",
+  },
   stackTag: {
     fontSize: "0.65rem",
     background: "rgba(255,255,255,0.04)",
@@ -147,5 +269,26 @@ const styles = {
     padding: "0.2rem 0.55rem",
     borderRadius: 3,
     color: "#64748b",
+  },
+  cardFooter: {
+    marginTop: "auto",
+    paddingTop: "1rem",
+    borderTop: "1px solid rgba(255,255,255,0.04)",
+  },
+  githubBtn: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 6,
+    padding: "0.5rem 0.9rem",
+    background: "rgba(255,255,255,0.03)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: 5,
+    color: "#94a3b8",
+    textDecoration: "none",
+    fontSize: "0.75rem",
+    fontWeight: 600,
+    letterSpacing: "0.03em",
+    transition: "all 0.2s",
+    cursor: "pointer",
   },
 };

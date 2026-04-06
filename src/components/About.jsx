@@ -80,18 +80,18 @@ const CARDS = [
       { main: "IGVP — DXP", sub: "AIESEC in UWU · Feb 2024–Feb 2025" },
     ],
   },
-  {
-    icon: <IconTrophy />,
-    title: "Achievements",
-    items: [
-      {
-        main: "Dean's Certificate",
-        sub: "Exceptional academic performance Y1S1",
-      },
-      { main: "Best IG Event", sub: "AIESEC in UWU organizing committee" },
-      { main: "Former IGVP for DXP", sub: "AIESEC in Uva Wellassa University" },
-    ],
-  },
+  // {
+  //   icon: <IconTrophy />,
+  //   title: "Achievements",
+  //   items: [
+  //     {
+  //       main: "Dean's Certificate",
+  //       sub: "Exceptional academic performance Y1S1",
+  //     },
+  //     { main: "Best IG Event", sub: "AIESEC in UWU organizing committee" },
+  //     { main: "Former IGVP for DXP", sub: "AIESEC in Uva Wellassa University" },
+  //   ],
+  // },
 ];
 
 export default function About() {
@@ -102,10 +102,9 @@ export default function About() {
           // About Me
         </p>
         <h2 style={styles.title}>
-          Engineering <span style={{ color: "#00ff9d" }}>scalable</span>{" "}
-          systems,
+          Building <span style={{ color: "#00ff9d" }}>reliable</span> backend
           <br />
-          from code to deployment.
+          systems that scale.
         </h2>
 
         {/* Info Cards */}
@@ -130,34 +129,34 @@ export default function About() {
         <div style={styles.grid}>
           <div>
             <p style={styles.text}>
-              I am a full-stack software engineer with a strong focus on
-              building <span style={{ color: "#00ff9d" }}>scalable</span>,{" "}
-              <span style={{ color: "#00ff9d" }}>reliable</span> and{" "}
-              <span style={{ color: "#00ff9d" }}>production-ready</span>{" "}
-              systems. My work spans across designing modern web applications,
-              developing backend services with NestJS and Node.js, and
-              implementing efficient system architectures that support long-term
-              growth.
+              I am an accomplished backend developer who recently finished
+              university studies with expertise in{" "}
+              <span style={{ color: "#00ff9d" }}>Node.js</span> and{" "}
+              <span style={{ color: "#00ff9d" }}>RESTful API</span> development.
+              I demonstrate strong analytical thinking and proficiency in
+              backend testing techniques, WordPress, and JavaScript.
             </p>
             <p style={styles.text}>
-              I specialize in bridging development and operations — working with
-              React, Node.js, and Python on the application side, and Docker,
-              Kubernetes, and cloud platforms on the infrastructure side. My
-              goal is to ensure that every product I build is not only
-              functional, but also{" "}
-              <span style={{ color: "#00ff9d" }}>maintainable</span>,{" "}
-              <span style={{ color: "#00ff9d" }}>secure</span> and{" "}
-              <span style={{ color: "#00ff9d" }}>performant</span> in real-world
-              environments.
+              Familiar with{" "}
+              <span style={{ color: "#00ff9d" }}>
+                microservices architecture
+              </span>{" "}
+              and adept at API integration. During my internship at Infact
+              Solutions, I developed backend applications with NestJS and
+              MongoDB, maintained APIs ensuring smooth interaction between
+              front-end and back-end systems, and contributed to building{" "}
+              <span style={{ color: "#00ff9d" }}>scalable</span> and{" "}
+              <span style={{ color: "#00ff9d" }}>efficient</span> server-side
+              applications.
             </p>
           </div>
 
           <div style={styles.statsGrid}>
             {[
-              { val: "1+", label: "Years professional experience" },
-              { val: "8+", label: "Projects developed" },
-              { val: "1k+", label: "Code commits" },
+              { val: "1Y", label: "Work experience" },
+              { val: "20+", label: "Projects completed" },
               { val: "3.00+", label: "University GPA" },
+              { val: "1k+", label: "Code Commits" },
             ].map((s) => (
               <div key={s.label} style={styles.statCard}>
                 <div style={styles.statVal}>{s.val}</div>

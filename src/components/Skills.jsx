@@ -1,19 +1,33 @@
 import { useState, useEffect, useRef } from "react";
 
 const SKILLS = {
-  Development: [
-    { name: "React / Next.js", level: 90 },
-    { name: "Node.js", level: 85 },
-    { name: "Python", level: 80 },
-    { name: "TypeScript", level: 82 },
-    { name: "REST & GraphQL APIs", level: 88 },
+  Backend: [
+    { name: "Node.js", level: 90 },
+    { name: "NestJS", level: 85 },
+    { name: "RESTful API Development", level: 88 },
+    { name: "MongoDB", level: 82 },
+    { name: "API Integration", level: 85 },
+  ],
+  Frontend: [
+    { name: "React / React Native", level: 80 },
+    { name: "JavaScript / TypeScript", level: 85 },
+    { name: "HTML / CSS", level: 88 },
+    { name: "Flutter / Dart", level: 75 },
+    { name: "WordPress", level: 70 },
   ],
   DevOps: [
-    { name: "Docker & Kubernetes", level: 87 },
-    { name: "CI/CD Pipelines", level: 85 },
-    { name: "AWS / GCP / Azure", level: 80 },
-    { name: "Terraform / IaC", level: 78 },
-    { name: "Linux & Shell Scripting", level: 90 },
+    { name: "Docker & Containerization", level: 78 },
+    { name: "CI/CD Pipelines", level: 75 },
+    { name: "Git & GitHub", level: 85 },
+    { name: "Linux & Shell Scripting", level: 80 },
+    { name: "Cloud Platforms (AWS/GCP)", level: 70 },
+  ],
+  "Other Skills": [
+    { name: "Backend Testing", level: 80 },
+    { name: "Microservices Architecture", level: 75 },
+    { name: "OOP Concepts", level: 82 },
+    { name: "Analytical Thinking", level: 88 },
+    { name: "Python / C / C++ / C#", level: 70 },
   ],
 };
 
@@ -54,22 +68,30 @@ export default function Skills() {
         </p>
         <h2 className="section-title">What I work with.</h2>
         <div style={styles.grid}>
-          {Object.entries(SKILLS).map(([cat, items]) => (
-            <div key={cat}>
-              <div style={styles.catHeader}>
-                <span
-                  style={{
-                    ...styles.catDot,
-                    background: cat === "DevOps" ? "#00ff9d" : "#4d9eff",
-                  }}
-                />
-                <span style={styles.catName}>{cat}</span>
+          {Object.entries(SKILLS).map(([cat, items]) => {
+            const colors = {
+              Backend: "#00ff9d",
+              Frontend: "#4d9eff",
+              DevOps: "#ff6b6b",
+              "Other Skills": "#ffbd2e",
+            };
+            return (
+              <div key={cat}>
+                <div style={styles.catHeader}>
+                  <span
+                    style={{
+                      ...styles.catDot,
+                      background: colors[cat] || "#94a3b8",
+                    }}
+                  />
+                  <span style={styles.catName}>{cat}</span>
+                </div>
+                {items.map((s) => (
+                  <SkillBar key={s.name} {...s} />
+                ))}
               </div>
-              {items.map((s) => (
-                <SkillBar key={s.name} {...s} />
-              ))}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -83,7 +105,11 @@ const styles = {
     position: "relative",
     zIndex: 1,
   },
-  grid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gap: "3rem",
+  },
   catHeader: {
     display: "flex",
     alignItems: "center",

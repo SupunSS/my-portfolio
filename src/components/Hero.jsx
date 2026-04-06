@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 
 const TERMINAL_LINES = [
   { delay: 0, text: "$ whoami", type: "cmd" },
-  { delay: 400, text: "→ fullstack developer & devops engineer", type: "out" },
+  { delay: 400, text: "→ backend developer & software engineer", type: "out" },
   { delay: 900, text: "$ cat skills.txt", type: "cmd" },
   {
     delay: 1300,
-    text: "→ react · node · python · docker · k8s · terraform",
+    text: "→ node.js · nestjs · mongodb · react · typescript",
     type: "out",
   },
   { delay: 1900, text: "$ systemctl status portfolio", type: "cmd" },
@@ -39,13 +39,14 @@ export default function Hero() {
             Available for hire
           </div>
           <h1 style={styles.title}>
-            Building systems
+            Building scalable
             <br />
-            <span style={styles.accent}>that scale.</span>
+            <span style={styles.accent}>backend systems.</span>
           </h1>
           <p style={styles.sub}>
-            Fullstack developer & DevOps engineer crafting resilient
-            infrastructure and clean, performant software.
+            Accomplished backend developer specializing in Node.js, NestJS, and
+            RESTful API development. Focused on building efficient, scalable
+            server-side applications.
           </p>
           <div style={styles.btns}>
             <a href="#projects" className="btn-primary">

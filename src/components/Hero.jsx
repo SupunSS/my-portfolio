@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+// src/components/Hero.jsx
+import { useEffect, useState } from "react";
 import { getRole } from "../utils/getRole";
+import { useWindowWidth } from "../hooks/useWindowWidth";
 
 const LINES = {
   default: [
@@ -86,6 +88,8 @@ export default function Hero() {
   const role = getRole();
   const lines = LINES[role] || LINES.default;
   const content = CONTENT[role] || CONTENT.default;
+  const width = useWindowWidth();
+  const isMobile = width <= 768;
 
   const [visible, setVisible] = useState([]);
   const [cursor, setCursor] = useState(true);
@@ -110,7 +114,13 @@ export default function Hero() {
 
   return (
     <section id="home" style={styles.hero} className="fade-in-up">
-      <div style={styles.grid}>
+      <div
+        style={{
+          ...styles.grid,
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+          gap: isMobile ? "2rem" : "4rem",
+        }}
+      >
         <div style={styles.left}>
           <div style={styles.badge}>
             <span style={styles.dot} />
@@ -152,6 +162,7 @@ export default function Hero() {
                         : line.type === "success"
                           ? "#00ff9d"
                           : "#94a3b8",
+                    wordBreak: "break-word",
                   }}
                 >
                   {line.text}
@@ -178,10 +189,12 @@ export default function Hero() {
         </div>
       </div>
 
-      <div style={styles.scrollHint}>
-        <div style={styles.scrollLine} />
-        <span style={styles.scrollText}>scroll</span>
-      </div>
+      {!isMobile && (
+        <div style={styles.scrollHint}>
+          <div style={styles.scrollLine} />
+          <span style={styles.scrollText}>scroll</span>
+        </div>
+      )}
     </section>
   );
 }
@@ -198,8 +211,6 @@ const styles = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "4rem",
     alignItems: "center",
     maxWidth: 1100,
     margin: "0 auto",
@@ -227,7 +238,7 @@ const styles = {
     animation: "pulse 2s infinite",
   },
   title: {
-    fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
+    fontSize: "clamp(2rem, 6vw, 3.4rem)",
     fontWeight: 800,
     lineHeight: 1.1,
     margin: 0,
@@ -271,7 +282,12 @@ const styles = {
     flexDirection: "column",
     gap: 10,
   },
-  termLine: { fontSize: "0.82rem", lineHeight: 1.6, letterSpacing: "0.01em" },
+  termLine: {
+    fontSize: "0.82rem",
+    lineHeight: 1.6,
+    letterSpacing: "0.01em",
+    overflowWrap: "break-word",
+  },
   scrollHint: {
     position: "absolute",
     bottom: 40,

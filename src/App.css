@@ -109,3 +109,47 @@
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+
+/* ── Mobile responsive patches ── */
+@media (max-width: 768px) {
+  /* Tighten horizontal padding on all sections */
+  section {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+ 
+  /* Navbar logo doesn't overflow */
+  nav a[href="#home"] {
+    font-size: 0.85rem;
+  }
+ 
+  /* Hero: reduce top padding so content isn't buried */
+  #home {
+    padding-top: 6rem !important;
+    padding-bottom: 3rem !important;
+    min-height: auto !important;
+  }
+ 
+  /* section-inner inherits padding instead of overflowing */
+  .section-inner {
+    width: 100%;
+    overflow-x: hidden;
+  }
+ 
+  /* About stats grid: 2 col is fine, but ensure it doesn't overflow */
+  .section-title {
+    font-size: clamp(1.5rem, 5vw, 2.2rem) !important;
+  }
+}
+ 
+@media (max-width: 480px) {
+  section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+ 
+  /* Form card padding tighter on very small screens */
+  .formCard {
+    padding: 1.25rem !important;
+  }
+}

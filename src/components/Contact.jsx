@@ -1,5 +1,7 @@
+// src/components/Contact.jsx
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { useWindowWidth } from "../hooks/useWindowWidth";
 
 const EMAILJS_SERVICE_ID = "service_v43si6c";
 const EMAILJS_TEMPLATE_ID = "template_nqq70e6";
@@ -21,7 +23,6 @@ const IconMail = () => (
     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
   </svg>
 );
-
 const IconPhone = () => (
   <svg
     width="18"
@@ -36,7 +37,6 @@ const IconPhone = () => (
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
   </svg>
 );
-
 const IconMapPin = () => (
   <svg
     width="18"
@@ -52,7 +52,6 @@ const IconMapPin = () => (
     <circle cx="12" cy="10" r="3" />
   </svg>
 );
-
 const IconGithub = () => (
   <svg
     width="15"
@@ -68,7 +67,6 @@ const IconGithub = () => (
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
-
 const IconLinkedin = () => (
   <svg
     width="15"
@@ -85,7 +83,6 @@ const IconLinkedin = () => (
     <circle cx="4" cy="4" r="2" />
   </svg>
 );
-
 const IconSend = () => (
   <svg
     width="16"
@@ -101,7 +98,6 @@ const IconSend = () => (
     <path d="M22 2 11 13" />
   </svg>
 );
-
 const IconCheck = () => (
   <svg
     width="16"
@@ -117,7 +113,6 @@ const IconCheck = () => (
     <path d="m22 10-7.5 7.5L13 16" />
   </svg>
 );
-
 const IconLoader = () => (
   <svg
     width="16"
@@ -141,48 +136,43 @@ export default function Contact() {
     subject: "",
     message: "",
   });
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [status, setStatus] = useState("idle");
+  const width = useWindowWidth();
+  const isMobile = width <= 768;
+  const isSmall = width <= 480;
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async () => {
     if (!form.name || !form.email || !form.message) return;
-
     setStatus("sending");
-
     const params = {
       from_name: form.name,
       from_email: form.email,
-      email: form.email, // for {{email}} in auto-reply To field
-      to_name: form.name, // for {{to_name}} in auto-reply body
+      email: form.email,
+      to_name: form.name,
       subject: form.subject || "Portfolio Contact",
       message: form.message,
     };
-
     try {
-      // Send main email to you
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         params,
         EMAILJS_PUBLIC_KEY,
       );
-
-      // Send auto-reply to the person who contacted you
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_AUTOREPLY_ID,
         params,
         EMAILJS_PUBLIC_KEY,
       );
-
       setStatus("success");
       setForm({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setStatus("idle"), 4000);
     } catch (err) {
       console.error("EmailJS error:", err);
-      console.error("Error details:", err.text);
       setStatus("error");
       setTimeout(() => setStatus("idle"), 4000);
     }
@@ -200,7 +190,12 @@ export default function Contact() {
           pipelines automated — I'm open to new opportunities.
         </p>
 
-        <div style={styles.grid}>
+        <div
+          style={{
+            ...styles.grid,
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1.6fr",
+          }}
+        >
           {/* Left: contact info */}
           <div style={styles.infoCol}>
             {[
@@ -219,7 +214,7 @@ export default function Contact() {
               {
                 icon: <IconMapPin />,
                 label: "Location",
-                value: "Kegalle, Sri Lanka",
+                value: "Colombo, Sri Lanka",
                 href: "#",
               },
             ].map((item) => (
@@ -247,7 +242,13 @@ export default function Contact() {
 
           {/* Right: form */}
           <div style={styles.formCard}>
-            <div style={styles.formRow}>
+            {/* Name + Email row stacks on very small screens */}
+            <div
+              style={{
+                ...styles.formRow,
+                gridTemplateColumns: isSmall ? "1fr" : "1fr 1fr",
+              }}
+            >
               <div style={styles.formGroup}>
                 <label style={styles.label}>Name *</label>
                 <input
@@ -287,13 +288,12 @@ export default function Contact() {
                 name="message"
                 value={form.message}
                 onChange={handleChange}
-                placeholder="Tell me about your project, timeline, or how I can help."
+                placeholder="Tell me about your opportunities or how I can help."
                 rows={5}
                 style={{ ...styles.input, resize: "vertical", lineHeight: 1.7 }}
               />
             </div>
 
-            {/* Status message */}
             {status === "success" && (
               <div
                 style={{
@@ -365,13 +365,7 @@ const styles = {
     maxWidth: 600,
     margin: "0 0 3rem",
   },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1.6fr",
-    gap: "2.5rem",
-    alignItems: "start",
-    maxWidth: 1100,
-  },
+  grid: { display: "grid", gap: "2.5rem", alignItems: "start", maxWidth: 1100 },
   infoCol: { display: "flex", flexDirection: "column", gap: "1rem" },
   contactCard: {
     display: "flex",
@@ -427,7 +421,7 @@ const styles = {
     flexDirection: "column",
     gap: "1.25rem",
   },
-  formRow: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" },
+  formRow: { display: "grid", gap: "1rem" },
   formGroup: { display: "flex", flexDirection: "column", gap: "0.4rem" },
   label: { fontSize: "0.72rem", color: "#64748b", letterSpacing: "0.06em" },
   input: {
